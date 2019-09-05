@@ -124,18 +124,10 @@ func getClient(creds *credentials) (*twitter.Client, error) {
 
 	// we can retrieve the user and verify if the credentials
 	// we have used successfully allow us to log in!
-	user, _, err := client.Accounts.VerifyCredentials(verifyParams)
+	_, _, err := client.Accounts.VerifyCredentials(verifyParams)
 	if err != nil {
 		return nil, err
 	}
-
-	_ = user
-
-	//userJSON, err := prettyJSON(user)
-	//if err != nil {
-	//	log.Print(err)
-	//}
-	//log.Printf("User's ACCOUNT:\n%v\n", string(userJSON))
 
 	return client, nil
 }
@@ -152,13 +144,6 @@ func tweet(client *twitter.Client, t string) {
 	if err != nil {
 		log.Print(err)
 	}
-
-	//j, err := prettyJSON(tweet)
-	//if err != nil {
-	//	log.Print(err)
-	//}
-
-	//fmt.Printf("Tweet: %v \nResponse Status Code: %v\n", string(j), resp.StatusCode)
 }
 
 // ymd returns the year month day as a string
@@ -227,8 +212,6 @@ func getTidePrediction(t time.Time) (*tideData, error) {
 	err = json.Unmarshal(bodyBytes, &v)
 	if err != nil {
 		log.Println(err)
-		//bstr := string(bodyBytes)
-		//log.Printf("Error unmarshalling: %v \n%v", bstr, err)
 		return nil, err
 	}
 	return &v, nil
